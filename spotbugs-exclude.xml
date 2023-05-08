@@ -1,0 +1,26 @@
+<FindBugsFilter>
+
+	<Match>
+		<Bug code="ST" />
+	</Match>
+	<Match>
+		<Bug code="AT" />
+	</Match>
+	<Match>
+		<!-- catches Exception to be fool-proof, instead of IOException. Code will be replaced by Logbook implementation -->
+		<Class name="org.zalando.logbook.JsonFieldBodyFilter" />
+	</Match>
+	<Match>
+		<!-- catches Exception to be fool-proof, instead of IOException. Code will be replaced by Logbook implementation -->
+		<Class name="org.zalando.logbook.JsonMaxBodySizeFilter" />
+	</Match>
+	<Match>
+		<!-- catches Exception to be fool-proof, instead of IOException. Code will be replaced by Logbook implementation -->
+		<Class name="org.zalando.logbook.JsonMaxValueLengthBodyFilter" />
+	</Match>
+	<Match>
+		<!-- state exposed as an optimalization -->
+		<Class name="org.entur.logging.context.plugins.CachedHttpServletRequest" />
+	</Match>
+	
+</FindBugsFilter>

@@ -1,0 +1,95 @@
+
+plugins {
+    id "com.google.protobuf" version "0.8.19"
+}
+
+dependencies {
+    api ("net.logstash.logback:logstash-logback-encoder:${logbackLogstashVersion}")
+
+    api("com.fasterxml.jackson.core:jackson-databind:${jacksonDatabindVersion}") {
+        force = true // because 'previous versions have security issues'
+    }
+    api("com.fasterxml.jackson.core:jackson-annotations:${jacksonVersion}") {
+        force = true // because 'previous versions have security issues'
+    }
+    api("com.fasterxml.jackson.core:jackson-core:${jacksonVersion}") {
+        force = true // because 'previous versions have security issues'
+    }
+
+
+    api("io.grpc:grpc-netty:${grpcNettyVersion}") {
+        force = true
+    }
+    api("io.grpc:grpc-services:${grpcNettyVersion}") {
+        force = true
+    }
+    api("io.grpc:grpc-services:${grpcNettyVersion}") {
+        force = true
+    }
+
+    // grpc dependencies
+    api("io.netty:netty-codec-http2:${nettyVersion}") {
+        force = true
+    }
+    api("io.netty:netty-handler-proxy:${nettyVersion}") {
+        force = true
+    }
+
+    api("io.netty:netty-tcnative-boringssl-static:${nettyTcnativeBoringsslStaticVersion}") {
+        force = true
+    }
+
+    api("io.grpc:grpc-api:$grpcVersion")
+    api("io.grpc:grpc-core:$grpcVersion")
+    api("io.grpc:grpc-protobuf:$grpcVersion")
+
+    // https://mvnrepository.com/artifact/org.slf4j/slf4j-api
+    api("org.slf4j:slf4j-api:") {
+        version {
+            strictly slf4jVersion
+        }
+    }
+
+    api("ch.qos.logback:logback-classic:") {
+        version {
+            strictly logbackVersion
+        }
+    }
+    api("ch.qos.logback:logback-core:") {
+        version {
+            strictly logbackVersion
+        }
+    }
+
+    api("javax.annotation:javax.annotation-api:1.3.2")
+    api("com.google.api.grpc:proto-google-common-protos:$grpcCommonsVersion")
+    api("com.google.protobuf:protobuf-java-util:${grpcProtobufVersion}")
+
+    testImplementation("com.google.truth:truth:${googleTruthVersion}")
+    testImplementation("com.google.truth.extensions:truth-java8-extension:${googleTruthVersion}")
+}
+
+spotbugs {
+    onlyAnalyze = ['org.entur.logging.grpc.*', 'org.entur.logging.javapgv.*']
+}
+
+sourceSets {
+    test.java.srcDirs += "${protobuf.generatedFilesBaseDir}/test/java"
+    test.java.srcDirs += "${protobuf.generatedFilesBaseDir}/test/grpc"
+}
+
+protobuf {
+  protoc {
+      artifact = "com.google.protobuf:protoc:${grpcProtobufVersion}"
+  }
+  plugins {
+      grpc {
+          artifact = "io.grpc:protoc-gen-grpc-java:$grpcVersion"
+      }
+  }
+  generateProtoTasks {
+      all()*.plugins {
+          grpc {}
+      }
+  }
+}

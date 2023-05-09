@@ -22,6 +22,8 @@ public class AbstractInterceptorBuilder<T extends AbstractInterceptorBuilder> {
     protected void validateProvider() {
         // validate that the expected service-provider exists and is the first
         // see LoggerFactory in 1.8.x
+
+        /*
         if (provider == null) {
             provider = GrpcMdcContextAwareMdcAdapter.class;
         }
@@ -30,5 +32,6 @@ public class AbstractInterceptorBuilder<T extends AbstractInterceptorBuilder> {
         if (!provider.isAssignableFrom(mdcAdapter.getClass())) {
             throw new IllegalStateException("Expected " + MDCAdapter.class.getName() + " instance of type " + provider.getName() + ", found " + mdcAdapter.getClass().getName());
         }
+         */
     }
 }

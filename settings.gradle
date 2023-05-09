@@ -1,1 +1,1 @@
-include 'request-response', 'mdc'
+include 'request-response', 'mdc', 'mdc-context', 'mdc-trace'

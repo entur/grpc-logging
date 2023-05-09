@@ -1,4 +1,4 @@
-package org.entur.logging.grpc;
+package org.entur.logging.grpc.mdc;
 
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
@@ -7,9 +7,6 @@ import io.grpc.ServerBuilder;
 import io.grpc.util.TransmitStatusRuntimeExceptionInterceptor;
 import org.entur.logging.grpc.filter.GrpcServerLoggingFilters;
 import org.entur.logging.grpc.slf4jv17.ClassicGrpcServerLoggingInterceptor;
-import org.entur.logging.grpc.slf4jv20.GrpcAddMdcTraceToResponseInterceptor;
-import org.entur.logging.grpc.slf4jv20.GrpcMdcContextInterceptor;
-import org.entur.logging.grpc.slf4jv20.GrpcTraceMdcContextInterceptor;
 import org.entur.oidc.grpc.test.GreetingRequest;
 import org.entur.oidc.grpc.test.GreetingServiceGrpc;
 import org.entur.oidc.grpc.test.GreetingServiceGrpc.GreetingServiceBlockingStub;
@@ -65,9 +62,8 @@ public class AbstractGrpcTest {
 				// reverse order;
 				// the status runtime exception interceptor should be the closest to the actual controller
 				.intercept(TransmitStatusRuntimeExceptionInterceptor.instance())
-				.intercept(new GrpcAddMdcTraceToResponseInterceptor())
 				.intercept(grpcServerLoggingInterceptor)
-				.intercept(GrpcTraceMdcContextInterceptor.newBuilder().build())
+				.intercept(new TestMdcContextInterceptor())
 				.intercept(GrpcMdcContextInterceptor.newBuilder().build())
 
 		  .build();

@@ -12,7 +12,6 @@ dependencies {
     api("com.fasterxml.jackson.core:jackson-annotations:${jacksonVersion}")
     api("com.fasterxml.jackson.core:jackson-core:${jacksonVersion}")
 
-
     api("io.grpc:grpc-netty:${grpcNettyVersion}")
     api("io.grpc:grpc-services:${grpcNettyVersion}")
     api("io.grpc:grpc-services:${grpcNettyVersion}")
@@ -77,3 +76,5 @@ protobuf {
       }
   }
 }
+
+

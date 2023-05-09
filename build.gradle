@@ -95,6 +95,10 @@ configure(buildProjects()) {
         }
         it.excludeFilter = file("$rootDir/spotbugs-exclude.xml")
     }
+
+    tasks.compileTestJava { dependsOn("generateTestProto") }
+
+
 }
 
 // projects which should be published
@@ -153,7 +157,6 @@ allprojects {
         mavenLocal()
         mavenCentral()
     }
-
 }
 
 gradle.projectsEvaluated {
@@ -172,4 +175,5 @@ gradle.projectsEvaluated {
     }
 
 }
+
 

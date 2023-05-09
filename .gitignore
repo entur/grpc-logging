@@ -122,3 +122,4 @@ Desktop.ini
 .merge_file*
 /.gradle/
 /build/
+build

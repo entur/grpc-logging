@@ -1,43 +1,25 @@
 
 plugins {
-    id "com.google.protobuf" version "0.8.19"
+    id "com.google.protobuf" version "0.9.3"
 }
 
 dependencies {
     api ("net.logstash.logback:logstash-logback-encoder:${logbackLogstashVersion}")
 
-    api("com.fasterxml.jackson.core:jackson-databind:${jacksonDatabindVersion}") {
-        force = true // because 'previous versions have security issues'
-    }
-    api("com.fasterxml.jackson.core:jackson-annotations:${jacksonVersion}") {
-        force = true // because 'previous versions have security issues'
-    }
-    api("com.fasterxml.jackson.core:jackson-core:${jacksonVersion}") {
-        force = true // because 'previous versions have security issues'
-    }
+    api("com.fasterxml.jackson.core:jackson-databind:${jacksonDatabindVersion}")
+    api("com.fasterxml.jackson.core:jackson-annotations:${jacksonVersion}")
+    api("com.fasterxml.jackson.core:jackson-core:${jacksonVersion}")
 
 
-    api("io.grpc:grpc-netty:${grpcNettyVersion}") {
-        force = true
-    }
-    api("io.grpc:grpc-services:${grpcNettyVersion}") {
-        force = true
-    }
-    api("io.grpc:grpc-services:${grpcNettyVersion}") {
-        force = true
-    }
+    api("io.grpc:grpc-netty:${grpcNettyVersion}")
+    api("io.grpc:grpc-services:${grpcNettyVersion}")
+    api("io.grpc:grpc-services:${grpcNettyVersion}")
 
     // grpc dependencies
-    api("io.netty:netty-codec-http2:${nettyVersion}") {
-        force = true
-    }
-    api("io.netty:netty-handler-proxy:${nettyVersion}") {
-        force = true
-    }
+    api("io.netty:netty-codec-http2:${nettyVersion}")
+    api("io.netty:netty-handler-proxy:${nettyVersion}")
 
-    api("io.netty:netty-tcnative-boringssl-static:${nettyTcnativeBoringsslStaticVersion}") {
-        force = true
-    }
+    api("io.netty:netty-tcnative-boringssl-static:${nettyTcnativeBoringsslStaticVersion}")
 
     api("io.grpc:grpc-api:$grpcVersion")
     api("io.grpc:grpc-core:$grpcVersion")

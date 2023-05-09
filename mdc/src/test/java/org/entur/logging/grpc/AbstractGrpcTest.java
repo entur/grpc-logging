@@ -1,4 +1,4 @@
-package org.entur.auth.grpc;
+package org.entur.logging.grpc;
 
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
@@ -7,6 +7,9 @@ import io.grpc.ServerBuilder;
 import io.grpc.util.TransmitStatusRuntimeExceptionInterceptor;
 import org.entur.logging.grpc.filter.GrpcServerLoggingFilters;
 import org.entur.logging.grpc.slf4jv17.ClassicGrpcServerLoggingInterceptor;
+import org.entur.logging.grpc.slf4jv20.GrpcAddMdcTraceToResponseInterceptor;
+import org.entur.logging.grpc.slf4jv20.GrpcMdcContextInterceptor;
+import org.entur.logging.grpc.slf4jv20.GrpcTraceMdcContextInterceptor;
 import org.entur.oidc.grpc.test.GreetingRequest;
 import org.entur.oidc.grpc.test.GreetingServiceGrpc;
 import org.entur.oidc.grpc.test.GreetingServiceGrpc.GreetingServiceBlockingStub;
@@ -25,8 +28,8 @@ public class AbstractGrpcTest {
 	
 	protected GreetingRequest greetingRequest = GreetingRequest.newBuilder().build();
 
-	private final static Integer port = 8097;
-
+	private static final Integer port = 8097;
+   
 	private static Server server;
 
 	protected final int maxOutboundMessageSize;
@@ -61,9 +64,11 @@ public class AbstractGrpcTest {
 				.addService(new GreetingController())
 				// reverse order;
 				// the status runtime exception interceptor should be the closest to the actual controller
-				.intercept(new MyValidationServerInterceptor())
 				.intercept(TransmitStatusRuntimeExceptionInterceptor.instance())
+				.intercept(new GrpcAddMdcTraceToResponseInterceptor())
 				.intercept(grpcServerLoggingInterceptor)
+				.intercept(GrpcTraceMdcContextInterceptor.newBuilder().build())
+				.intercept(GrpcMdcContextInterceptor.newBuilder().build())
 		  .build();
  
 		server.start();

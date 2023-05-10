@@ -228,21 +228,4 @@ allprojects {
 
 }
 
-gradle.projectsEvaluated {
-    // do not scan testing tools and so on, see https://medium.com/@appmattus/android-security-scanning-your-app-for-known-vulnerabilities-421384603fc5
-    // note: must be set after project is evaluated, as Android creates configurations based on the build types
-    dependencyCheck {
-        scanConfigurations = configurations.findAll {
-            (!it.name.startsWithAny('androidTest', 'test', 'debug', 'lint', 'kapt') && !it.name.contains("AndroidTest") && !it.name.contains("Test") && !it.name.contains("AnnotationProcessor"))
-        }.collect {
-            it.name
-        }
-    }
-
-    tasks.withType(JavaCompile) {
-        options.compilerArgs << "-Xlint:deprecation"
-    }
-
-}
-
 

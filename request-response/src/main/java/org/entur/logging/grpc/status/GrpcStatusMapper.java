@@ -1,7 +1,5 @@
 package org.entur.logging.grpc.status;
 
-import com.google.protobuf.InvalidProtocolBufferException;
-
 public interface GrpcStatusMapper {
 
     /**
